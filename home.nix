@@ -32,6 +32,11 @@
     pkgs.clang-tools
     pkgs.libvterm
     pkgs.qemu
+    pkgs.xwayland
+    pkgs.xorg.xhost
+    pkgs.ffmpeg
+    pkgs.tmux
+    pkgs.fzf
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -54,6 +59,30 @@
       fcitx5-rime
       fcitx5-gtk
     ];
+  };
+
+  # Tmux config
+  programs.tmux = {
+    enable = true;
+    extraConfig = ''
+      set -g default-terminal "xterm-256color"
+      set -ga terminal-overrides ",*256col*:Tc"
+      set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
+      set-environment -g COLORTERM "truecolor"
+
+      set -g prefix C-g
+      unbind C-b
+      bind C-g send-prefix
+
+      set-option -g mouse on
+
+      set-option -g default-shell /run/current-system/sw/bin/fish
+
+      bind-key -r -T prefix C-p	resize-pane -U
+      bind-key -r -T prefix C-n resize-pane -D
+      bind-key -r -T prefix C-b resize-pane -L
+      bind-key -r -T prefix C-f resize-pane -R
+    '';
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

@@ -101,6 +101,7 @@
     emacs-gtk
     glxinfo
     vulkan-tools
+    ntfs3g
   ];
 
   fonts.packages = with pkgs; [
