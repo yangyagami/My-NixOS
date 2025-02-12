@@ -37,6 +37,9 @@
     pkgs.ffmpeg
     pkgs.tmux
     pkgs.fzf
+    pkgs.maple-mono
+    pkgs.kitty
+    pkgs.chromium
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -61,13 +64,31 @@
     ];
   };
 
+  # Kitty
+  programs.kitty = {
+    enable = true;
+    extraConfig = ''
+      shell /run/current-system/sw/bin/fish
+      
+      font_family Maple Mono
+      font_size 16.0
+      
+      background_color #1e1e1e
+      foreground_color #ffffff
+      
+      cursor_color #ffcc00
+      
+      window_padding 10
+      background_opacity 0.9
+      mouse_enabled yes
+    '';
+  };
+
   # Tmux config
   programs.tmux = {
     enable = true;
     extraConfig = ''
       set -g default-terminal "xterm-256color"
-      set -ga terminal-overrides ",*256col*:Tc"
-      set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
       set-environment -g COLORTERM "truecolor"
 
       set -g prefix C-g

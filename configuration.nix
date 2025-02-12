@@ -18,7 +18,7 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
-  networking.proxy.default = "http://172.168.0.152:10809/";
+  networking.proxy.default = "http://192.168.42.129:10809/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
@@ -46,8 +46,8 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = false;
+  services.xserver.desktopManager.gnome.enable = false;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -102,7 +102,12 @@
     glxinfo
     vulkan-tools
     ntfs3g
+    wofi
+    waybar 
   ];
+
+  # Vmware
+  virtualisation.vmware.host.enable = true;
 
   fonts.packages = with pkgs; [
       roboto
@@ -155,11 +160,24 @@
   # Enable fish
   programs.fish.enable = true;
 
+  # Hyprland
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true; # recommended for most users
+    xwayland.enable = true; # Xwayland can be disabled.
+  };
+
   # Enable graphics
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
+
+  # Swap
+  swapDevices = [ {
+    device = "/var/lib/swapfile";
+    size = 4*1024;
+  } ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
